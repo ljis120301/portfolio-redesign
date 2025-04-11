@@ -1,60 +1,75 @@
 "use client"
 
 import { useTheme } from "./theme-provider"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
-  // Handle mounting - crucial for SSR
   useEffect(() => {
     setMounted(true)
   }, [])
-  
-  // Function to toggle theme
-  const toggleTheme = () => {
+
+  const toggleTheme = useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light")
-  }
+  }, [theme, setTheme])
+
+  if (!mounted) return null
 
   return (
-    <button
+    <motion.button
       onClick={toggleTheme}
-      className={`
-        fixed top-4 right-4 z-50 w-10 h-10 
-        rounded-full flex items-center justify-center 
-        bg-black/10 dark:bg-white/10 backdrop-blur-sm 
-        transition-all duration-300 ease-in-out
-        hover:scale-110 active:scale-95
-        hover:bg-black/20 dark:hover:bg-white/20
-        ${!mounted ? 'opacity-0' : 'opacity-100'}
-      `}
+      className="fixed top-4 right-4 z-[9999] flex h-10 w-10 items-center justify-center rounded-full"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
       aria-label="Toggle theme"
-      style={{ opacity: mounted ? 1 : 0 }}
     >
-      {/* Only render when mounted */}
-      {mounted && (
-        <>
-          {/* Sun icon - only visible in dark mode */}
-          <SunIcon 
-            className={`
-              h-5 w-5 absolute text-white 
-              transition-all duration-300 ease-in-out
-              ${theme === 'dark' ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
-            `} 
-          />
-          
-          {/* Moon icon - only visible in light mode */}
-          <MoonIcon 
-            className={`
-              h-5 w-5 absolute text-[#3d3929]
-              transition-all duration-300 ease-in-out
-              ${theme === 'light' ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
-            `} 
-          />
-        </>
-      )}
-    </button>
+      {/* Background layer */}
+      <motion.div
+        className={`
+          absolute inset-0 rounded-full 
+          ${theme === 'light' ? 'bg-[#F5F5F6]' : 'bg-[#2A2B32]'}
+        `}
+        animate={{
+          scale: isHovered ? 1.1 : 1,
+          opacity: isHovered ? 0.9 : 1
+        }}
+        transition={{ duration: 0.2 }}
+      />
+      
+      {/* Icon container */}
+      <div className="relative h-6 w-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={theme}
+            initial={{ rotate: -45, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: 45, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            {theme === 'light' ? (
+              <SunIcon className="h-5 w-5 text-[#2A2B32]" />
+            ) : (
+              <MoonIcon className="h-5 w-5 text-[#F5F5F6]" />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Subtle border animation */}
+      <motion.div
+        className="absolute inset-0 rounded-full border"
+        animate={{
+          borderColor: theme === 'light' ? 'rgba(42,43,50,0.1)' : 'rgba(245,245,246,0.1)',
+          scale: isHovered ? 1.15 : 1
+        }}
+        transition={{ duration: 0.2 }}
+      />
+    </motion.button>
   )
 }
 
@@ -65,20 +80,20 @@ function SunIcon(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      <circle cx="12" cy="12" r="4" />
+      <line x1="12" y1="2" x2="12" y2="4" />
+      <line x1="12" y1="20" x2="12" y2="22" />
+      <line x1="4.93" y1="4.93" x2="6.34" y2="6.34" />
+      <line x1="17.66" y1="17.66" x2="19.07" y2="19.07" />
+      <line x1="2" y1="12" x2="4" y2="12" />
+      <line x1="20" y1="12" x2="22" y2="12" />
+      <line x1="6.34" y1="17.66" x2="4.93" y2="19.07" />
+      <line x1="19.07" y1="4.93" x2="17.66" y2="6.34" />
     </svg>
   )
 }
@@ -90,7 +105,7 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
