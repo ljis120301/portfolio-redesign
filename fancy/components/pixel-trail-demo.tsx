@@ -1,6 +1,7 @@
 import useScreenSize from "@/hooks/use-screen-size"
 import PixelTrail from "@/fancy/components/background/pixel-trail"
 import { useTheme } from "@/components/theme-provider"
+import Link from "next/link"
 
 const PixelTrailDemo: React.FC = () => {
   const screenSize = useScreenSize()
@@ -22,9 +23,14 @@ const PixelTrailDemo: React.FC = () => {
         <h2 className="font-VT323 text-3xl sm:text-4xl md:text-6xl uppercase">
           whoisjason.me
         </h2>
-        <p className="pt-0.5 sm:pt-2 text-xs sm:text-base md:text-xl">
+        <p className="pt-0.5 sm:pt-2 text-xs sm:text-base md:text-xl pb-2">
           Jason's personal website 
         </p>
+        
+        <Link href="/Projects" style={{backgroundColor: '#bd5d3a'}} className="px-6 py-3 hover:opacity-90 rounded-full font-medium text-white transition-colors duration-300 z-10">
+              View My Work
+        </Link>
+
       </div>
     </div>
   )

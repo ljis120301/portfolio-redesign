@@ -77,23 +77,23 @@ export default function MeShowcase({ text, isTyping, theme }: MeShowcaseProps) {
       
       <div className="py-64">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8" style={{color: '#da7756'}}>My Projects</h2>
+          <h2 className="text-3xl font-bold mb-8 hover:underline" style={{color: '#da7756'}}>My Passions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className={`p-6 ${isDark ? 'bg-[#2a2924]' : 'bg-white'} rounded-lg shadow-md transition-colors duration-300`}>
-              <h3 className="text-xl font-semibold mb-2" style={{color: '#bd5d3a'}}>Project One</h3>
-              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>A beautiful website with amazing features and cutting-edge technologies.</p>
+              <h3 className="text-xl font-semibold mb-2 hover:underline" style={{color: '#bd5d3a'}}>Next js</h3>
+              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>Stunning UX/UI with Next js, empowering me to make beautiful and functional websites.</p>
             </div>
             <div className={`p-6 ${isDark ? 'bg-[#2a2924]' : 'bg-white'} rounded-lg shadow-md transition-colors duration-300`}>
-              <h3 className="text-xl font-semibold mb-2" style={{color: '#bd5d3a'}}>Project Two</h3>
-              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>An interactive application demonstrating advanced UI techniques.</p>
+              <h3 className="text-xl font-semibold mb-2 hover:underline" style={{color: '#bd5d3a'}}>Linux</h3>
+              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>Linux is the backbone of my development environment, providing a stable and secure platform for building and testing my projects.</p>
             </div>
             <div className={`p-6 ${isDark ? 'bg-[#2a2924]' : 'bg-white'} rounded-lg shadow-md transition-colors duration-300`}>
-              <h3 className="text-xl font-semibold mb-2" style={{color: '#bd5d3a'}}>Project Three</h3>
-              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>A mobile-first design with elegant animations and transitions.</p>
+              <h3 className="text-xl font-semibold mb-2 hover:underline" style={{color: '#bd5d3a'}}>Networking</h3>
+              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>Networking is the fundamentals of what interconnects our world today.</p>
             </div>
             <div className={`p-6 ${isDark ? 'bg-[#2a2924]' : 'bg-white'} rounded-lg shadow-md transition-colors duration-300`}>
-              <h3 className="text-xl font-semibold mb-2" style={{color: '#bd5d3a'}}>Project Four</h3>
-              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>A performance-optimized application with seamless user experience.</p>
+              <h3 className="text-xl font-semibold mb-2 hover:underline" style={{color: '#bd5d3a'}}>Cybersecurity</h3>
+              <p className={`${isDark ? 'text-[#f5f2e8]' : 'text-[#3d3929]'} transition-colors duration-300`}>Security is the foundation of trust in our digital world.</p>
             </div>
           </div>
         </div>

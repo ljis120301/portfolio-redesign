@@ -1,20 +1,58 @@
 "use client"
 
 import { useTheme } from "./theme-provider"
+import { useEffect, useState } from "react"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  // Handle mounting - crucial for SSR
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  // Function to toggle theme
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light")
+  }
 
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="fixed top-4 right-4 z-50 p-2 rounded-full bg-black/10 dark:bg-white/10 backdrop-blur-sm transition-colors hover:bg-black/20 dark:hover:bg-white/20"
+      onClick={toggleTheme}
+      className={`
+        fixed top-4 right-4 z-50 w-10 h-10 
+        rounded-full flex items-center justify-center 
+        bg-black/10 dark:bg-white/10 backdrop-blur-sm 
+        transition-all duration-300 ease-in-out
+        hover:scale-110 active:scale-95
+        hover:bg-black/20 dark:hover:bg-white/20
+        ${!mounted ? 'opacity-0' : 'opacity-100'}
+      `}
       aria-label="Toggle theme"
+      style={{ opacity: mounted ? 1 : 0 }}
     >
-      {theme === "light" ? (
-        <MoonIcon className="h-5 w-5 text-[#3d3929]" />
-      ) : (
-        <SunIcon className="h-5 w-5 text-white" />
+      {/* Only render when mounted */}
+      {mounted && (
+        <>
+          {/* Sun icon - only visible in dark mode */}
+          <SunIcon 
+            className={`
+              h-5 w-5 absolute text-white 
+              transition-all duration-300 ease-in-out
+              ${theme === 'dark' ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
+            `} 
+          />
+          
+          {/* Moon icon - only visible in light mode */}
+          <MoonIcon 
+            className={`
+              h-5 w-5 absolute text-[#3d3929]
+              transition-all duration-300 ease-in-out
+              ${theme === 'light' ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
+            `} 
+          />
+        </>
       )}
     </button>
   )
